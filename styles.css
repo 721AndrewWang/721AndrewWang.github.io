@@ -1,0 +1,743 @@
+/* Define CSS variables globally */
+:root {
+  --primary-color: #346C9C; /* Main purple color */
+  --secondary-color: #e0e0ff; /* Light background color for sections */
+  --background-color: #f4f4f9; /* Background color for the body */
+  --text-color: #333; /* General text color */
+  --button-text-color: white; /* Text color for buttons */
+  --hover-color: white; /* Button hover color */
+}
+
+.footer a {
+  text-decoration: none;
+  color: var(--primary-color);
+  margin: 0 5px;
+  opacity: 1 !important; /* Ensure the links are visible */
+  visibility: visible !important; /* Ensure visibility */
+  display: inline !important; /* Ensure they are displayed inline */
+}
+
+.footer a:hover {
+  text-decoration: underline;
+  color: var(--hover-color);
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+  }
+  
+  nav ul li {
+    margin: 0 15px;
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: bold;
+  }
+  
+  nav ul li a:hover {
+    color: var(--primary-color);
+  }  
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 1.5rem;
+  color: white;
+  background-image: url("./images/header-bg.png"); /* Updated path to your new image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 160px;
+}
+
+/* Flexbox Layout for Profile Section */
+.profile-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Align items to the top */
+  gap: 2rem; /* Space between text and image */
+  margin-top: 2rem;
+}
+
+.profile-text {
+  flex: 2; /* Text container takes up more space */
+  max-width: 60%; /* Optional: Limit the width of the text */
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.profile-image {
+  flex: 1; /* Image container is narrower */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image img {
+  width: 200px; /* Adjust the width to your preference */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Center alignment if needed */
+  margin: 0 auto; /* Optional: Center horizontally */
+  border-radius: 8px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add subtle shadow */
+}
+
+.header-content {
+  text-align: center; /* Center-align the text within its area */
+  flex-grow: 1; /* Take up remaining space so that it stays centered */
+}
+
+.header-content h1,
+.header-content p {
+  text-shadow: 0px 0px 8px rgba(0, 0, 0, 1); /* Adds a subtle shadow to the text */
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.header p {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.home-button {
+  text-decoration: none; /* Remove underline */
+  color: white; /* Button text color */
+  font-size: 1.2rem;
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.home-button:hover {
+  text-decoration: underline; /* Add underline on hover for better feedback */
+}
+
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-top: 0;
+}
+
+.container {
+  padding: 0.5rem;
+}
+
+.education-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Space between items */
+  margin-top: 2rem;
+}
+
+.education-item {
+  display: flex;
+  align-items: center; /* Vertically center logos and text */
+  gap: 1rem; /* Maintain spacing between logo and text */
+}
+
+.back-home {
+  text-align: center; /* Center the link */
+  margin: 1rem auto; /* Add spacing around the link */
+}
+
+.back-home a {
+  text-decoration: none; /* Remove underline */
+  color: #346C9C; /* Purple color */
+  font-weight: bold; /* Bold text */
+  background-color: #d7f0f8; /* Light purple background */
+  padding: 0.25rem 0.5rem; /* Add padding around the link */
+  border-radius: 4px; /* Rounded corners */
+  display: inline-block; /* Ensure padding applies properly */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.back-home a:hover {
+  background-color: #7badd9; /* Darker purple on hover */
+  color: white; /* White text on hover */
+}
+
+
+.content-section {
+  margin-top: 1rem; /* Decrease this value to move it closer */
+}
+
+.education-logo {
+  width: 80px; /* Adjust size of the logos */
+  height: auto;
+}
+
+.education-details {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.education-details p {
+  margin: 0.5rem 0; /* Add spacing between paragraphs */
+}
+
+.education-details em {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.education-details span {
+  font-style: normal;
+  color: #555; /* Adjust thesis title color */
+}
+
+.education-logo {
+  width: 150px; /* Adjust width to your preference */
+  height: auto;
+  margin-right: 1rem;
+}
+
+#experience, #languages {
+  background-color: #e7f3ff; /* Light blue background */
+  color: var(--text-color); /* Ensure text contrasts well */
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+#experience h2, #languages h2 {
+  color: var(--primary-color); /* Keep headings in primary color for consistency */
+  margin-bottom: 1rem;
+}
+
+/* HONORS Section */
+.honors-section {
+  background-color: #e7f3ff; /* Same light blue as Work Experience */
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Same shadow as Work Experience */
+}
+
+.honors-section h2 {
+  color: #346C9C; /* Same blue as Work Experience */
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.5rem; /* Same size as Work Experience heading */
+}
+
+.honors-section ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+.honors-section ul li {
+  margin-bottom: 0.5rem; /* Spacing between items */
+  font-size: 1rem; /* Match font size with Work Experience */
+  line-height: 1.6; /* Consistent line height */
+  color: #000; /* Default text color */
+}
+
+.honors-section ul li strong {
+  color: #000; /* Match strong text color with default text color */
+  font-weight: bold; /* Keep the boldness for emphasis */
+}
+
+h2 {
+  margin-top: 2;
+}
+
+/* SCIENTIFIC OUTPUT Section */
+.scientific-output-section {
+  background-color: #e7f3ff; /* Same light blue as other sections */
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.scientific-output-section h2 {
+  color: #346C9C; /* Same blue as other headings */
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.5rem; /* Same size as Work Experience heading */
+}
+
+.scientific-output-section h3 {
+  font-size: 1.2rem; /* Slightly smaller subheading */
+  color: #346C9C; /* Same blue for subheadings */
+  margin-bottom: 1rem;
+}
+
+.scientific-output-section ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+.scientific-output-section ul li {
+  margin-bottom: 0.5rem; /* Space between items */
+  font-size: 1rem; /* Match text size with other sections */
+  line-height: 1.6; /* Consistent line spacing */
+  color: #000; /* Default text color */
+}
+
+.post {
+  background-color: white;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-meta {
+  font-size: 0.9rem;
+  color: #777; /* Light gray color for the text */
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.post h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.post p {
+  margin: 0 0 1rem 0;
+}
+
+.post a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.post a:hover {
+  text-decoration: underline;
+}
+
+/* VOLUNTEER WORK AND OUTREACH Section */
+.volunteer-section {
+  background-color: #e7f3ff; /* Light blue background, same as others */
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.volunteer-section h2 {
+  color: #346C9C; /* Same blue as other headings */
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.5rem; /* Same size as other section headings */
+}
+
+.volunteer-section ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+.volunteer-section ul li {
+  margin-bottom: 0.5rem; /* Add spacing between items */
+  font-size: 1rem; /* Match text size with other sections */
+  line-height: 1.6; /* Consistent line height */
+  color: #000; /* Default text color */
+}
+
+.volunteer-section ul li strong {
+  color: #000; /* Match strong text color with default text */
+  font-weight: bold;
+}
+
+/* EXTRACURRICULAR EXPERIENCE Section */
+.extracurricular-section {
+  background-color: #e7f3ff; /* Light blue background for consistency */
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.extracurricular-section h2 {
+  color: #346C9C; /* Blue color for the heading */
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.5rem; /* Match heading size with other sections */
+}
+
+.extracurricular-section ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+}
+
+.extracurricular-section ul li {
+  margin-bottom: 0.5rem; /* Spacing between items */
+  font-size: 1rem; /* Match text size with other sections */
+  line-height: 1.6; /* Consistent line height */
+  color: #000; /* Default text color */
+}
+
+.extracurricular-section ul li strong {
+  color: #000; /* Dates in bold, matching the text color */
+  font-weight: bold;
+}
+
+.center {
+  display: flex; /* Enables flexbox */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Centers children horizontally */
+  text-align: center; /* Ensures text elements (like <h2> and <p>) are centered */
+}
+
+.about p {
+  line-height: 1.6; /* Improve readability */
+}
+
+.back-button {
+  padding: 0.8rem;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+.blog-post-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.blog-post {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-image {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+h2,
+h3 {
+  margin-top: 1rem;
+}
+
+footer.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: var(--button-text-color);
+  margin-top: 2rem;
+  border-radius: 4px;
+}
+
+.footer a {
+  text-decoration: none;
+  color: var(--button-text-color); /* Matches footer text color */
+  margin: 0 5px;
+  opacity: 1; /* Fully visible */
+  visibility: visible; /* Always visible */
+  display: inline-block; /* Ensures proper inline spacing */
+}
+
+.footer a:hover {
+  text-decoration: underline;
+  color: var(--hover-color); /* Change to hover color */
+}
+
+button {
+  background-color: #fff; /* Button background */
+  color: var(--primary-color); /* Button text color */
+  border: 1px solid var(--primary-color); /* Border matches text color */
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: var(--primary-color); /* Hover background */
+  color: #fff; /* Hover text color */
+}
+
+
+.technologies-section h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--hover-color); /* Accent color for the heading */
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow cards to wrap to new lines */
+  gap: 1.5rem; /* Space between the cards */
+  justify-content: center; /* Center the cards horizontally */
+}
+
+.card {
+  flex: 1 1 calc(33.333% - 1.5rem); /* 3 columns on large screens */
+  background-color: #fff; /* Light background color */
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: left;
+  text-decoration: none; /* Remove underline from links */
+  color: var(--text-color); /* Text color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px); /* Subtle lift effect on hover */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--primary-color); /* Accent color for the card title */
+}
+
+.card p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 2 columns on tablets */
+@media (max-width: 768px) {
+  .card {
+    flex: 1 1 calc(50% - 1.5rem); /* 2 columns */
+  }
+}
+
+/* 1 column on mobile screens */
+@media (max-width: 480px) {
+  .card {
+    flex: 1 1 100%; /* 1 column */
+  }
+}
+
+/* General Body Styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Hobbies Section Styling */
+.hobbies-section {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 600px;
+  background-color: #e7f3ff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.hobbies-section h2 {
+  color: #346C9C; /* 设置标题为蓝色 */
+}
+
+/* Hobby Block Styling */
+.hobby {
+  margin-bottom: 20px;
+}
+
+/* Hobby Title Styling */
+.hobby-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Link Styling */
+.hobby a {
+  text-decoration: none;
+  color: #007BFF;
+  margin-left: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hobby a img {
+  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Marathon Image Styling */
+.marathon-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+/* PHOTOGRAPHY Section */
+.photography-section {
+  background-color: #e3f2fd; /* Light blue background */
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.photography-section h2 {
+  color: #000000; /* Blue heading color */
+  margin-bottom: 1rem;
+  font-weight: bold;
+  font-size: 1.25rem; /* Match heading size with other sections */
+  text-align: left;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns for the grid */
+  gap: 1rem; /* Space between the images */
+}
+
+.photo-grid img {
+  width: 100%; /* Ensure images are responsive */
+  border-radius: 8px; /* Rounded corners for images */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow to images */
+  object-fit: cover; /* Crop images if necessary to fit the grid */
+}
+
+/* Comment Section Styling */
+.comment-section {
+  background-color: #f9f9ff; /* 浅紫色背景 */
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+.comment-section h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+
+.form-group {
+  flex: 1;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+textarea {
+  resize: none;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+  border-color: #7badd9;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button[type="submit"] {
+  background-color: #7badd9;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #346c9c;
+}
+
+.icon-container {
+  display: flex;
+  gap: 10px;
+  font-size: 1.2rem;
+}
+
+.emoji-icon,
+.attachment-icon {
+  cursor: pointer;
+}
+
+
+
+.sandwich-technique {
+  text-decoration: underline !important; /* 强制添加下划线 */
+  font-size: 16px;
+  color: white !important;
+}
+
+.sandwich-image-container {
+  display: flex;
+  justify-content: center; /* 图片居中 */
+  margin: 20px 0; /* 添加上下间距 */
+}
+
+.sandwich-image {
+  max-width: 100%; /* 确保图片适应容器宽度 */
+  height: auto; /* 保持图片比例 */
+  border-radius: 8px; /* 可选：圆角 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+}
+
+.video-section {
+  text-align: center;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
