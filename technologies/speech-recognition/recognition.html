@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CALL Blog</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="../../styles.css" />
+    <link href="./recorder.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="header-content">
+        <div class="text-container">
+          <h1>Computer Assisted language Learning</h1>
+          <p>by [student name]</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-container">
+      <div class="container">
+        <div class="back-home">
+          <a href="../../index.html">← Back to Home</a>
+        </div>
+        <h1>Speech Recognition</h1>
+        <p>
+          On this page, you can record your voice and use Speech Recognition to see it as text.
+        </p>
+      </div>
+      <!-- Insert audio recorder below this line  -->
+      <section class="main-controls">
+        <canvas class="visualizer" height="60px"></canvas>
+        <div id="buttons">
+          <button class="record">Record</button>
+          <button class="stop">Stop</button>
+        </div>
+      </section>
+
+      <div class="recordings-container">
+        <div class="recordings-list">
+          <!-- 添加等待提示 -->
+          <div class="waiting-message">
+            Waiting for your voice input...
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./recorder.js"></script>
+    <script src="./convert-audio.js"></script>
+    <script src="./recognition.js"></script> 
+  </body>
+</html>
