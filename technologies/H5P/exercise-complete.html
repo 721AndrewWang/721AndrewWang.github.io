@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Congratulations!</title>
+    <link rel="stylesheet" href="../../styles.css" />
+    <style>
+      .page-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        min-height: 80vh;
+        justify-content: center;
+      }
+
+      .congrats-container {
+        max-width: 600px;
+        padding: 2em;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .congrats-gif {
+        width: 300px;
+        height: 300px;
+        margin: 2em auto;
+        border-radius: 10px;
+      }
+
+      .congrats-message {
+        font-size: 1.5em;
+        color: #2b6cb0;
+        margin: 1em 0;
+      }
+
+      .back-button {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: rgba(43, 108, 176, 0.9);
+        border-radius: 25px;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+        margin-top: 2em;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .back-button:hover {
+        background-color: #1d4ed8;
+        transform: translateY(-2px);
+      }
+
+      .achievement-text {
+        font-size: 1.1em;
+        color: #4b5563;
+        line-height: 1.6;
+        margin: 1em 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-container">
+      <div class="congrats-container">
+        <h1>🎉 Congratulations! 🎉</h1>
+        <img 
+          src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDJ6Y2k4ZWFyMWF0MHd0ZnJxbXhyeXBnOWF4ZGRnbWF6aWFyOWx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oz8xAFtqoOUUrsh7W/giphy.gif" 
+          alt="Celebration" 
+          class="congrats-gif"
+        >
+        <p class="congrats-message">You've completed all the exercises!</p>
+        <p class="achievement-text">
+          You've successfully worked through all the language learning exercises. 
+          Your dedication to improving your language skills is commendable!
+        </p>
+        <a href="./H5P-main-page.html" class="back-button">← Return to Exercise Menu</a>
+      </div>
+    </div>
+  </body>
+</html> 
