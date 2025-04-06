@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CALL Blog</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="../../styles.css" />
+    <style>
+      /* 使用更现代的CSS变量系统 */
+      :root {
+        --primary-color: #2b6cb0;
+        --background-color: #fff;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --text-color: #2b2b2b;
+        --border-radius: 12px;
+        --container-width: 45%;
+        --container-min-width: 400px;
+        --container-gap: 2rem;
+        --container-padding: 2rem;
+      }
+
+      .page-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 var(--container-padding);
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+        animation: fadeIn 0.8s ease-out 0.5s forwards;
+      }
+
+      .horizontal-layout {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        width: 100%;
+        gap: var(--container-gap);
+        margin: 2rem auto;
+        padding: var(--container-padding);
+        background: var(--background-color);
+        border-radius: var(--border-radius);
+        position: relative;
+        transform-origin: center;
+        transform: perspective(1200px) rotateX(70deg) scale(0.8);
+        opacity: 0;
+        animation: unfoldBook 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+      }
+
+      .H5P-container, .gec-asr-container {
+        flex: 0 1 var(--container-width);
+        min-width: var(--container-min-width);
+        margin: 0;
+        background: var(--background-color);
+        border-radius: var(--border-radius);
+        box-shadow: 0 4px 8px var(--shadow-color);
+        transition: transform 0.3s ease,
+                    box-shadow 0.3s ease;
+        will-change: transform;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: slideUp 0.8s ease-out 1.5s forwards;
+      }
+
+      .H5P-container {
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .gec-asr-container {
+        padding: var(--container-padding);
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      /* 中间分隔线样式 */
+      .horizontal-layout::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 2rem;
+        bottom: 2rem;
+        width: 2px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          var(--primary-color) 15%,
+          var(--primary-color) 85%,
+          transparent
+        );
+        transform: translateX(-50%);
+        opacity: 0.3;
+      }
+
+      /* 响应式布局 */
+      @media (max-width: 1200px) {
+        :root {
+          --container-width: 100%;
+          --container-min-width: 300px;
+          --container-gap: 1.5rem;
+          --container-padding: 1.5rem;
+        }
+
+        .horizontal-layout {
+          flex-direction: column;
+        }
+
+        .horizontal-layout::after {
+          left: 2rem;
+          right: 2rem;
+          top: 50%;
+          width: auto;
+          height: 2px;
+          background: linear-gradient(
+            to right,
+            transparent,
+            var(--primary-color) 15%,
+            var(--primary-color) 85%,
+            transparent
+          );
+          transform: translateY(-50%);
+        }
+      }
+
+      /* 按钮组样式 */
+      .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        max-width: 300px;
+        margin: 1.5rem auto;
+        padding-right: 0;
+      }
+
+      button {
+        width: 100%;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      /* 标题和说明文本样式 */
+      .center h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--text-color);
+      }
+
+      .exercise-instruction {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.6;
+        margin: 1rem auto 2rem;
+        max-width: 800px;
+        text-align: center;
+        padding: 0 20px;
+      }
+
+      /* 移除遮罩层 */
+      .iframe-overlay {
+        display: none;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+        padding: 40px 20px;
+        margin-bottom: 0;
+      }
+
+      .center h1 {
+        font-size: 2.5em;
+        margin: 0;
+        padding: 0;
+        color: #2b2b2b;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+
+      .exercise-navigation {
+        display: flex;
+        justify-content: center;
+        margin: 2em 0;
+        padding: 0 20px;
+      }
+      
+      /* 添加导航按钮样式 */
+      .nav-button {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        color: #2b6cb0;
+        text-decoration: none;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-button:hover {
+        background-color: #2b6cb0;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      /* GEC-ASR 功能样式 */
+      .gec-asr-container {
+        flex: 0 1 var(--container-width);
+        min-width: var(--container-min-width);
+        margin: 0;
+        background: transparent;
+        border-radius: var(--border-radius);
+        transition: transform 0.3s ease;
+        will-change: transform;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        /* 添加纸张质感 */
+        background-image: 
+          linear-gradient(90deg, 
+            rgba(255,255,255,.9) 0%,
+            rgba(255,255,255,1) 50%,
+            rgba(255,255,255,.9) 100%);
+        padding: 20px 40px;
+      }
+
+      .gec-asr-container h2 {
+        color: var(--primary-color);
+        margin-bottom: 20px;
+        width: 100%;
+        text-align: center;
+        padding-left: 0;
+      }
+
+      .gec-asr-container p {
+        color: #4a5568;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        text-align: center;
+        padding-left: 0;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      mark {
+        background-color: #ffeb3b;
+        font-weight: bold;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .output strong {
+        color: #2b6cb0;
+        display: block;
+        margin-top: 15px;
+      }
+
+      .section-divider {
+        width: 100%;
+        max-width: 800px;
+        margin: 30px auto;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(43, 108, 176, 0.3), transparent);
+      }
+
+      /* 标题也居中 */
+      h1 {
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+      }
+
+      /* 说明文本也居中 */
+      .exercise-instruction {
+        width: 100%;
+        text-align: center;
+        margin: 1em auto;
+      }
+
+      /* 使用更现代的选择器 */
+      .horizontal-layout {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: var(--container-gap);
+        margin-top: 10px;
+        padding: var(--container-padding);
+        background: var(--background-color);
+        border-radius: var(--border-radius);
+        position: relative;
+      }
+
+      /* 使用更现代的过渡效果 */
+      .H5P-container, .gec-asr-container {
+        background: var(--background-color);
+        border-radius: var(--border-radius);
+        box-shadow: 
+          0 4px 8px var(--shadow-color);
+        transition: transform 0.3s ease,
+                    box-shadow 0.3s ease;
+        will-change: transform;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .H5P-container,
+        .gec-asr-container,
+        .nav-button,
+        .page-container,
+        .horizontal-layout,
+        .tab-buttons,
+        .button-group,
+        .feedback-section {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* 使用更现代的媒体查询语法 */
+      @media screen and (max-width: 1200px) {
+        .horizontal-layout {
+          padding: 20px;
+        }
+      }
+
+      /* 添加填空练习样式 */
+      .exercise-card {
+        background: linear-gradient(to right,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(255, 252, 250, 0.95) 50%,
+          rgba(250, 245, 240, 0.95) 100%);
+        border-radius: 8px;
+        padding: 2.5rem 3rem;
+        margin: 2rem 3rem 2.5rem;
+        position: relative;
+        box-shadow: 
+          0 1px 1px rgba(0,0,0,0.1),
+          0 2px 2px rgba(0,0,0,0.1),
+          0 4px 4px rgba(0,0,0,0.1),
+          0 8px 8px rgba(0,0,0,0.1),
+          5px 5px 15px rgba(0,0,0,0.2),
+          -8px 0 20px -5px rgba(0,0,0,0.2);
+        transform: perspective(2000px) rotateY(1deg);
+        transform-style: preserve-3d;
+        opacity: 1;
+      }
+
+      /* 书本左侧书脊效果 */
+      .exercise-card::before {
+        content: '';
+        position: absolute;
+        left: -15px;
+        top: 0;
+        width: 30px;
+        height: 100%;
+        background: linear-gradient(to right,
+          rgba(0,0,0,0.1) 0%,
+          rgba(0,0,0,0.05) 50%,
+          transparent 100%);
+        border-radius: 3px 0 0 3px;
+        transform: translateX(-50%) rotateY(-25deg);
+        transform-origin: right;
+      }
+
+      /* 书本右侧页面效果 */
+      .exercise-card::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 40px;
+        height: 100%;
+        background: linear-gradient(to right,
+          transparent 0%,
+          rgba(0,0,0,0.02) 20%,
+          rgba(0,0,0,0.05) 100%);
+        border-radius: 0 8px 8px 0;
+        /* 添加多层页面效果 */
+        background-image: 
+          repeating-linear-gradient(
+            to right,
+            transparent,
+            transparent 2px,
+            rgba(0,0,0,0.03) 2px,
+            rgba(0,0,0,0.03) 4px
+          );
+      }
+
+      /* 书本顶部和底部的页面效果 */
+      .exercise-card .page-edge-top,
+      .exercise-card .page-edge-bottom {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(to right,
+          rgba(0,0,0,0.05) 0%,
+          rgba(0,0,0,0.02) 50%,
+          rgba(0,0,0,0.05) 100%);
+      }
+
+      .exercise-card .page-edge-top {
+        top: 0;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .exercise-card .page-edge-bottom {
+        bottom: 0;
+        border-radius: 0 0 8px 8px;
+      }
+
+      /* 移除翻页动画，改为简单的显示/隐藏 */
+      .exercise-group {
+        transition: none;
+        transform: none;
+        backface-visibility: visible;
+        opacity: 1;
+      }
+
+      .exercise-group[style*="display: none"] {
+        transform: none;
+        opacity: 0;
+      }
+
+      .exercise-group:not([style*="display: none"]) {
+        transform: none;
+        opacity: 1;
+      }
+
+      /* 修改 JavaScript 中的切换逻辑 */
+      .exercise-group:nth-child(2),
+      .exercise-group:nth-child(3) {
+        animation-delay: 0s;
+      }
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
+        .exercise-card {
+          margin: 1.5rem;
+          padding: 2rem 1.5rem;
+          transform: perspective(2000px) rotateY(0.5deg);
+        }
+
+        .exercise-card::before {
+          left: -10px;
+          width: 20px;
+        }
+
+        .exercise-card::after {
+          width: 30px;
+        }
+
+        .horizontal-layout {
+          transform-origin: top center;
+        }
+      }
+
+      .feedback-section {
+        width: 100%;
+        margin-top: 1.5rem;
+        text-align: center;
+      }
+
+      .feedback-section h2 {
+        color: var(--primary-color);
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .feedback-content {
+        background: rgba(255, 255, 255, 0.98);
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        margin: 0.5rem auto;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        max-width: 90%;
+      }
+
+      /* 选项卡样式 */
+      .tab-container {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+
+      .tab-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .tab-button {
+        padding: 0.5rem 1rem;
+        border: none;
+        background: rgba(43, 108, 176, 0.1);
+        color: var(--primary-color);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .tab-button.active {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      @keyframes unfoldBook {
+        0% {
+          transform: perspective(1200px) rotateX(70deg) scale(0.8);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: perspective(1200px) rotateX(0deg) scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* 祝贺页面样式 */
+      .congratulations-card {
+        background: linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(240, 247, 255, 0.95) 100%);
+        border-radius: 8px;
+        padding: 3rem;
+        margin: 2rem 3rem;
+        text-align: center;
+        box-shadow: 
+          0 4px 6px rgba(0, 0, 0, 0.1),
+          0 10px 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* 移除装饰性图标 */
+      .congratulations-card::before,
+      .congratulations-card::after {
+        display: none;
+      }
+
+      .congratulations-title {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+      }
+
+      .congratulations-subtitle {
+        font-size: 1.5rem;
+        color: #4a5568;
+        margin-bottom: 2rem;
+        font-style: italic;
+      }
+
+      .achievement-text {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #2d3748;
+        margin: 1.5rem 0;
+      }
+
+      .restart-button {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        border: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 2rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .restart-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      /* 盖章动画样式 */
+      .stamp {
+        position: absolute;
+        right: 40px;
+        bottom: 120px;
+        width: 120px;
+        height: 120px;
+        transform: rotate(12deg);
+        opacity: 0;
+        animation: stampEffect 1s ease-out forwards;
+      }
+
+      .stamp-border {
+        position: absolute;
+          width: 100%;
+        height: 100%;
+        border: 2px solid var(--primary-color);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .stamp-text {
+        font-size: 0.9rem;
+        color: var(--primary-color);
+        font-weight: bold;
+        text-align: center;
+        line-height: 1.4;
+      }
+
+      @keyframes stampEffect {
+        0% {
+          transform: rotate(12deg) scale(3);
+          opacity: 0;
+        }
+        50% {
+          transform: rotate(12deg) scale(0.8);
+          opacity: 0.5;
+        }
+        100% {
+          transform: rotate(12deg) scale(1);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="header-content">
+        <div class="text-container">
+          <h1>Computer Assisted language Learning</h1>
+          <p>by [Jianan Wang]</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-container">
+      <div class="container">
+        <div class="center">
+          <h1>The Book of Dutch Answers</h1>
+        </div>
+        <p class="exercise-instruction">
+          Practice Dutch A1 level speaking with interactive dialog cards and grammar feedback tools.
+        </p>
+      </div>
+
+      <!-- 水平布局容器 -->
+      <div class="horizontal-layout">
+        <!-- 左侧练习区域 -->
+        <div class="H5P-container">
+          <div class="tab-container">
+            <div class="tab-buttons">
+              <button class="tab-button active" data-tab="dialog-cards">Dialog Cards</button>
+              <button class="tab-button" data-tab="fill-blanks">Fill in Blanks</button>
+        </div>
+
+            <!-- Dialog Cards 内容 -->
+            <div class="tab-content active" id="dialog-cards">
+              <iframe class="H5P-iframe" 
+                      src="Dutch-A1-Speaking-Practice-Dialog-Cards-Code.html"
+                      frameborder="0"
+                      scrolling="no"
+                      allowfullscreen
+                      allow="autoplay *; geolocation *; microphone *; camera *; midi *; encrypted-media *">
+              </iframe>
+            </div>
+
+            <!-- Fill in Blanks 内容 -->
+            <div class="tab-content" id="fill-blanks">
+              <div class="exercise-card exercise-group" data-group="1">
+                <h2>Dagelijkse Gesprekken (Daily Conversations) 1</h2>
+                <div class="sentence-container">
+                  Ik <input type="text" class="blank-input" data-answer="woon"> in Amsterdam.
+                </div>
+                <div class="sentence-container">
+                  Hij <input type="text" class="blank-input" data-answer="spreekt"> Nederlands.
+                </div>
+                <div class="sentence-container">
+                  Wij <input type="text" class="blank-input" data-answer="gaan"> naar school.
+                </div>
+              </div>
+
+              <div class="exercise-card exercise-group" data-group="2" style="display: none;">
+                <h2>Dagelijkse Gesprekken (Daily Conversations) 2</h2>
+                <div class="sentence-container">
+                  Zij <input type="text" class="blank-input" data-answer="werkt"> in het ziekenhuis.
+                </div>
+                <div class="sentence-container">
+                  De kinderen <input type="text" class="blank-input" data-answer="spelen"> in de tuin.
+                </div>
+                <div class="sentence-container">
+                  Jullie <input type="text" class="blank-input" data-answer="leren"> Nederlands.
+                </div>
+              </div>
+
+              <div class="exercise-card exercise-group" data-group="3" style="display: none;">
+                <h2>Voorkeuren & Interesses (Preferences & Interests)</h2>
+                <div class="sentence-container">
+                  Ik <input type="text" class="blank-input" data-answer="hou van"> Nederlandse muziek.
+                </div>
+                <div class="sentence-container">
+                  Hij <input type="text" class="blank-input" data-answer="drinkt"> graag koffie.
+                </div>
+                <div class="sentence-container">
+                  Wij <input type="text" class="blank-input" data-answer="houden van"> lekker eten.
+                </div>
+              </div>
+
+              <div class="exercise-card exercise-group" data-group="4" style="display: none;">
+                <h2>Het Weer (Weather)</h2>
+                <div class="sentence-container">
+                  Het <input type="text" class="blank-input" data-answer="regent"> vandaag.
+                </div>
+                <div class="sentence-container">
+                  De zon <input type="text" class="blank-input" data-answer="schijnt"> morgen.
+                </div>
+                <div class="sentence-container">
+                  Het <input type="text" class="blank-input" data-answer="sneeuwt"> in de winter.
+                </div>
+              </div>
+
+              <div class="exercise-card exercise-group" data-group="5" style="display: none;">
+                <h2>Locaties & Richtingen (Locations & Directions)</h2>
+                <div class="sentence-container">
+                  De supermarkt <input type="text" class="blank-input" data-answer="ligt"> naast het station.
+                </div>
+                <div class="sentence-container">
+                  Het museum <input type="text" class="blank-input" data-answer="staat"> in het centrum.
+                </div>
+                <div class="sentence-container">
+                  De school <input type="text" class="blank-input" data-answer="is"> tegenover het park.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧功能区域 -->
+        <div class="gec-asr-container">
+          <div class="tab-container">
+            <div class="tab-buttons">
+              <button class="tab-button active" data-tab="pronunciation">Pronunciation</button>
+              <button class="tab-button" data-tab="grammar">Grammar Check</button>
+            </div>
+
+            <!-- 发音练习部分 -->
+            <div class="tab-content active" id="pronunciation">
+          <h2>🎓 Dutch Grammar and Pronunciation Practice</h2>
+          <p>Record your Dutch sentences and get instant grammar feedback with pronunciation assistance.</p>
+
+              <div class="button-group">
+          <button id="startBtn">🎙️ Start Recording</button>
+          <button id="stopBtn" disabled>⏹️ Stop & Analyze</button>
+          <button id="playTTS" disabled>🔊 Play Corrected Sentence</button>
+              </div>
+
+              <div class="feedback-section">
+          <h2>📝 Recognized Sentence:</h2>
+          <pre id="asrText">Waiting for audio input...</pre>
+
+          <h2>✅ Grammar Feedback:</h2>
+          <div class="output" id="gecResult">Your grammar feedback will appear here after recording.</div>
+              </div>
+            </div>
+
+            <!-- 语法检查部分 -->
+            <div class="tab-content" id="grammar">
+              <h2>🎓 Grammar Practice</h2>
+              <p>Check your answers and get instant grammar feedback.</p>
+
+              <div class="button-group">
+                <button id="checkAnswers">✓ Check Answers</button>
+                <button id="showHints">💡 Show Hints</button>
+                <button id="nextExercise">→ Next Exercise</button>
+              </div>
+
+              <div class="feedback-section">
+                <h2>📝 Your Progress:</h2>
+                <div class="feedback-content" id="progressFeedback">
+                  Complete the sentences to see your progress.
+                </div>
+
+                <h2>✅ Grammar Tips:</h2>
+                <div class="feedback-content" id="grammarTips">
+                  Tips will appear here after checking your answers.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 导航按钮 -->
+      <div class="exercise-navigation">
+        <a href="../../index.html" class="nav-button">← Back to Home</a>
+      </div>
+    </div>
+
+    <script>
+      // 使用更现代的JavaScript语法
+      const initializeIframe = () => {
+            const iframe = document.querySelector('.H5P-iframe');
+        
+        if (!iframe) {
+          console.error('Iframe element not found');
+          return;
+        }
+
+        // 使用CSS变量
+        iframe.style.setProperty('opacity', '0');
+        
+        const handleIframeLoad = () => {
+          requestAnimationFrame(() => {
+            iframe.style.setProperty('opacity', '1');
+            
+            try {
+              const iframeDoc = iframe.contentDocument ?? iframe.contentWindow?.document;
+              if (!iframeDoc) {
+                throw new Error('无法访问iframe文档');
+              }
+
+              const content = iframeDoc.body ?? iframeDoc.documentElement;
+              if (content) {
+                const newHeight = Math.max(800, content.scrollHeight + 50);
+                iframe.style.setProperty('height', `${newHeight}px`);
+              }
+            } catch(error) {
+              console.error("无法调整iframe高度:", error);
+              iframe.style.setProperty('height', '800px');
+            }
+          });
+        };
+
+        iframe.addEventListener('load', handleIframeLoad);
+        iframe.addEventListener('error', (error) => {
+          console.error('Iframe加载失败:', error);
+          iframe.style.setProperty('opacity', '1');
+          iframe.style.setProperty('height', '800px');
+        });
+      };
+
+      // 使用更现代的DOM加载检测
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeIframe);
+      } else {
+        initializeIframe();
+      }
+
+      // 使用防抖优化定期检查
+      const debounce = (fn, delay) => {
+        let timeoutId;
+        return (...args) => {
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(() => fn(...args), delay);
+        };
+      };
+
+      const checkIframeHeight = debounce(() => {
+        const iframe = document.querySelector('.H5P-iframe');
+        if (!iframe?.contentWindow) return;
+
+        try {
+          const doc = iframe.contentDocument ?? iframe.contentWindow.document;
+          if (doc?.body) {
+            const newHeight = Math.max(800, doc.body.scrollHeight + 50);
+            iframe.style.setProperty('height', `${newHeight}px`);
+          }
+        } catch(error) {
+          console.warn('检查iframe高度失败:', error);
+        }
+      }, 250);
+
+      // 使用IntersectionObserver优化性能
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            checkIframeHeight();
+          }
+        });
+      });
+
+      document.querySelector('.H5P-iframe') && 
+      observer.observe(document.querySelector('.H5P-iframe'));
+
+      // Script for GEC-ASR functionality
+      let mediaRecorder;
+      let audioChunks = [];
+      let correctedSentence = "";
+
+      const startBtn = document.getElementById("startBtn");
+      const stopBtn = document.getElementById("stopBtn");
+      const playTTS = document.getElementById("playTTS");
+      const asrText = document.getElementById("asrText");
+      const gecResult = document.getElementById("gecResult");
+
+      function highlightDiff(original, corrected) {
+        const oWords = original.split(/(\s+)/);
+        const cWords = corrected.split(/(\s+)/);
+        let resultO = [], resultC = [];
+
+        for (let i = 0; i < Math.max(oWords.length, cWords.length); i++) {
+          if (oWords[i] !== cWords[i]) {
+            if (oWords[i]) resultO.push(`<mark>${oWords[i]}</mark>`);
+            if (cWords[i]) resultC.push(`<mark>${cWords[i]}</mark>`);
+          } else {
+            if (oWords[i]) resultO.push(oWords[i]);
+            if (cWords[i]) resultC.push(cWords[i]);
+          }
+        }
+
+        return [resultO.join(""), resultC.join("")];
+      }
+
+      startBtn.onclick = async () => {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = e => e.data.size > 0 && audioChunks.push(e.data);
+
+        mediaRecorder.onstop = async () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          const formData = new FormData();
+          formData.append('file', audioBlob, 'audio.webm');
+          formData.append('model_id', 'scribe_v1');
+
+          asrText.textContent = "⏳ Recognizing...";
+          gecResult.textContent = "⏳ Analyzing grammar...";
+
+          try {
+            const asrResp = await fetch("https://api.elevenlabs.io/v1/speech-to-text", {
+              method: "POST",
+              headers: { "xi-api-key": "sk_d9f2022e022759193013a5169cb0a22b294c663dff788ccc" },
+              body: formData
+            });
+
+            const asrData = await asrResp.json();
+            const sentence = asrData.text || "No speech detected.";
+            asrText.textContent = sentence;
+
+            const prompt = `You are a Dutch language teacher. Please help correct the grammar of the following Dutch sentence. Provide feedback in the following format:\nOriginal:\nCorrected:\nError Type:\nExplanation (in English):\n\nSentence: ${sentence}`;
+
+            const gecResp = await fetch("https://api.deepseek.com/chat/completions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer sk-668561ddc7004f5f85c969bcb6e8e6fe"
+              },
+              body: JSON.stringify({
+                model: "deepseek-chat",
+                messages: [{ role: "user", content: prompt }],
+                stream: false
+              })
+            });
+
+            const gecData = await gecResp.json();
+            const feedback = gecData.choices?.[0]?.message?.content || "⚠️ No feedback returned.";
+
+            const orig = feedback.match(/Original:\s*(.+)/i)?.[1] || "";
+            correctedSentence = feedback.match(/Corrected:\s*(.+)/i)?.[1] || "";
+            const errorType = feedback.match(/Error Type:\s*(.+)/i)?.[1] || "";
+            const explanation = feedback.match(/Explanation.*?:\s*([\s\S]+)/i)?.[1] || "";
+
+            const [hlOrig, hlCorr] = highlightDiff(orig, correctedSentence);
+            gecResult.innerHTML = `
+              <strong>Original:</strong> ${hlOrig}<br>
+              <strong>Corrected:</strong> ${hlCorr}<br>
+              <strong>Error Type:</strong> ${errorType}<br>
+              <strong>Explanation:</strong> ${explanation.trim()}
+            `;
+
+            playTTS.disabled = false;
+          } catch (err) {
+            asrText.textContent = "❌ Recognition failed: " + err.message;
+            gecResult.textContent = "❌ Unable to analyze grammar.";
+          }
+        };
+
+        mediaRecorder.start();
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+        playTTS.disabled = true;
+        asrText.textContent = "🎤 Listening...";
+      };
+
+      stopBtn.onclick = () => {
+        mediaRecorder.stop();
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+      };
+
+      playTTS.onclick = async () => {
+        try {
+          const ttsResp = await fetch("https://api.elevenlabs.io/v1/text-to-speech/pNInz6obpgDQGcFmaJgB", {
+            method: "POST",
+            headers: {
+              "xi-api-key": "sk_59570cb6e5fc7c881c90f29ae74d13ae4958cbb341118acc",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: correctedSentence, model_id: "eleven_monolingual_v1" })
+          });
+          const audioBlob = await ttsResp.blob();
+          const audioURL = URL.createObjectURL(audioBlob);
+          const audio = new Audio(audioURL);
+          audio.play();
+        } catch (err) {
+          alert("TTS failed: " + err.message);
+        }
+      };
+
+      // 添加选项卡切换功能
+      document.addEventListener('DOMContentLoaded', () => {
+        // 选项卡切换逻辑
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const tabContainer = button.closest('.tab-container');
+            const tabName = button.dataset.tab;
+            
+            // 更新按钮状态
+            tabContainer.querySelectorAll('.tab-button').forEach(btn => {
+              btn.classList.remove('active');
+            });
+            button.classList.add('active');
+            
+            // 更新内容显示
+            tabContainer.querySelectorAll('.tab-content').forEach(content => {
+              content.classList.remove('active');
+            });
+            tabContainer.querySelector(`#${tabName}`).classList.add('active');
+          });
+        });
+
+        // Fill in Blanks 功能
+        let currentGroup = 1;
+        const totalGroups = 5;
+
+        function updateGrammarTips() {
+          const tips = {
+            // 基础日常对话组 (1)
+            'woon': 'The verb "wonen" (to live) conjugates to "woon" in first person singular.',
+            'spreekt': 'Third person singular requires the -t ending in Dutch.',
+            'gaan': 'The verb "gaan" is irregular and doesn\'t change in plural form.',
+            
+            // 基础日常对话组 (2)
+            'werkt': 'Third person singular adds -t to the verb stem.',
+            'spelen': 'Plural subjects use the infinitive form of the verb.',
+            'leren': 'Plural subjects use the infinitive form of the verb.',
+            
+            // 喜好表达组
+            'hou van': 'The expression "houden van" means "to like/love" and requires "van" after it.',
+            'drinkt': 'Third person singular adds -t to the verb stem.',
+            'houden van': 'The plural form of "houden van" is used with "wij/zij/jullie".',
+            
+            // 天气描述组
+            'regent': 'Weather expressions in Dutch always use "het" as the subject.',
+            'schijnt': 'The verb "schijnen" (to shine) adds -t in third person singular.',
+            'sneeuwt': 'Weather verbs always use "het" as the subject and add -t.',
+            
+            // 方位表达组
+            'ligt': 'The verb "liggen" (to lie/be located) adds -t in third person singular.',
+            'staat': 'The verb "staan" (to stand/be located) adds -t in third person singular.',
+            'is': 'The verb "zijn" is irregular and "is" is used for third person singular.'
+          };
+
+          let tipContent = '';
+          const currentInputs = document.querySelectorAll(`.exercise-group[data-group="${currentGroup}"] .blank-input`);
+          currentInputs.forEach(input => {
+            const userAnswer = input.value.trim().toLowerCase();
+            const correctAnswer = input.dataset.answer.toLowerCase();
+            if (userAnswer !== correctAnswer) {
+              tipContent += `<p>${tips[correctAnswer]}</p>`;
+            }
+          });
+
+          grammarTips.innerHTML = tipContent || 'Great job! No grammar tips needed.';
+        }
+
+        const checkAnswersBtn = document.getElementById('checkAnswers');
+        const showHintsBtn = document.getElementById('showHints');
+        const nextExerciseBtn = document.getElementById('nextExercise');
+        const progressFeedback = document.getElementById('progressFeedback');
+        const grammarTips = document.getElementById('grammarTips');
+
+        if (checkAnswersBtn) {
+          checkAnswersBtn.addEventListener('click', () => {
+            let correct = 0;
+            const currentInputs = document.querySelectorAll(`.exercise-group[data-group="${currentGroup}"] .blank-input`);
+            currentInputs.forEach(input => {
+              const userAnswer = input.value.trim().toLowerCase();
+              const correctAnswer = input.dataset.answer.toLowerCase();
+              
+              if (userAnswer === correctAnswer) {
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+                correct++;
+              } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+              }
+            });
+
+            progressFeedback.innerHTML = `
+              You got ${correct} out of ${currentInputs.length} correct!
+              ${correct === currentInputs.length ? '🎉 Perfect!' : 'Keep practicing!'}
+            `;
+
+            updateGrammarTips();
+          });
+        }
+
+        if (showHintsBtn) {
+          showHintsBtn.addEventListener('click', () => {
+            const currentInputs = document.querySelectorAll(`.exercise-group[data-group="${currentGroup}"] .blank-input`);
+            currentInputs.forEach(input => {
+              const correctAnswer = input.dataset.answer;
+              grammarTips.innerHTML += `
+                <p>Hint for "${input.parentNode.textContent.trim()}": 
+                The correct form is "${correctAnswer}"</p>
+              `;
+            });
+          });
+        }
+
+        if (nextExerciseBtn) {
+          nextExerciseBtn.addEventListener('click', () => {
+            // 直接切换显示状态，不使用动画
+            document.querySelector(`.exercise-group[data-group="${currentGroup}"]`).style.display = 'none';
+            
+            // 检查是否完成所有练习
+            if (currentGroup === totalGroups) {
+              // 显示祝贺页面
+              const congratulationsCard = document.createElement('div');
+              congratulationsCard.className = 'exercise-card congratulations-card';
+              congratulationsCard.innerHTML = `
+                <h2 class="congratulations-title">Gefeliciteerd!</h2>
+                <h3 class="congratulations-subtitle">Congratulations!</h3>
+                
+                <p class="achievement-text">
+                  Je hebt alle oefeningen voltooid!<br>
+                  You have completed all exercises!
+                </p>
+                
+                <p class="achievement-text">
+                  Je Nederlands wordt steeds beter.<br>
+                  Your Dutch is getting better and better.
+                </p>
+                
+                <p class="achievement-text">
+                  Blijf zo doorgaan!<br>
+                  Keep up the good work!
+                </p>
+
+                <div class="stamp">
+                  <div class="stamp-border">
+                    <div class="stamp-text">
+                      GESLAAGD<br>
+                      PASSED
+                    </div>
+                  </div>
+                </div>
+                
+                <button class="restart-button" onclick="location.reload()">
+                  Opnieuw beginnen / Start Again
+                </button>
+              `;
+              
+              // 替换当前内容
+              document.querySelector('#fill-blanks').innerHTML = '';
+              document.querySelector('#fill-blanks').appendChild(congratulationsCard);
+              
+              // 禁用Next Exercise按钮
+              nextExerciseBtn.disabled = true;
+              return;
+            }
+            
+            currentGroup = currentGroup % totalGroups + 1;
+            document.querySelector(`.exercise-group[data-group="${currentGroup}"]`).style.display = 'block';
+            
+            // 重置输入和反馈
+            const inputs = document.querySelectorAll(`.exercise-group[data-group="${currentGroup}"] .blank-input`);
+            inputs.forEach(input => {
+              input.value = '';
+              input.classList.remove('correct', 'incorrect');
+            });
+            progressFeedback.textContent = 'Complete the sentences to see your progress.';
+            grammarTips.textContent = 'Tips will appear here after checking your answers.';
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
